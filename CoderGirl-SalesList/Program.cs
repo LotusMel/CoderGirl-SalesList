@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-
+using System.Linq;
 
 namespace CoderGirl_SalesList
 {
@@ -17,29 +17,29 @@ namespace CoderGirl_SalesList
         private void Run()
         {
             List<SalesRecord> salesRecords = GetSalesRecordsFromFileData();
-            int countAsia = GetCountForAsia(salesRecords);
-            Console.WriteLine(countAsia);
+            int countNorthAmerica = GetCountForNorthAmerica(salesRecords);
+            Console.WriteLine(countNorthAmerica);
         }
 
-        private int GetCountForAsia(List<SalesRecord> salesRecords)
+        private int GetCountForNorthAmerica(List<SalesRecord> salesRecords)
         {
             int count = 0;
-            foreach (SalesRecord record in salesRecords)
+            foreach(SalesRecord record in salesRecords)
             {
-                if (record.Region == "Asia")
+                if(record.Region == "North America")
                 {
                     count++;
                 }
             }
+
             return count;
         }
 
         private List<SalesRecord> GetSalesRecordsFromFileData()
         {
-
             List<SalesRecord> salesRecords = new List<SalesRecord>();
             bool isFirstRow = true;
-            foreach (string line in File.ReadLines(@"Data\1000 Sales Records.csv"))
+            foreach (string line in File.ReadLines(@"1000 Sales Records.csv"))
             {
                 if (isFirstRow)
                 {
@@ -49,7 +49,6 @@ namespace CoderGirl_SalesList
 
                 SalesRecord salesRecord = CreateSalesRecord(line);
                 salesRecords.Add(salesRecord);
-             
             }
             return salesRecords;
         }
@@ -64,6 +63,7 @@ namespace CoderGirl_SalesList
             salesRecord.SalesChannel = properties[3];
             salesRecord.OrderPriority = properties[4];
             salesRecord.OrderDate = DateTime.Parse(properties[5]);
+
             return salesRecord;
         }
     }
